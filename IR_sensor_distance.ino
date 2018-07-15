@@ -8,6 +8,7 @@ int TX_PIN = 6;
 int RX_PIN = 7;
 int duration;
 int distance;
+double avg_visibility = 850;  // Arbitrarily chosen value
 
 void setup() {
   pinMode(TX_PIN, OUTPUT);
@@ -16,7 +17,15 @@ void setup() {
   pinMode(buzz, OUTPUT);
   digitalWrite(pd, HIGH); //supply 5 volts to photodiode  
   digitalWrite(buzz, LOW); //set the buzzer in off mode (initial condition)  
-  Serial.begin(9600); //setting serial monitor at a default baund rate of 9600  
+  Serial.begin(9600); //setting serial monitor at a default baund rate of 9600
+
+  // determine basic lighting value that makes use of IR sensor appropriate
+  int samples = 200;
+  for (int i =0; i < samples; i++) {
+	avg_visibility=avg_visibility+analogRead(senRead);
+  }
+  avg_visibility=avg_visibility/samples;
+
 }
 void loop() {
   int val = analogRead(senRead); //variable to store values from the photodiode  
