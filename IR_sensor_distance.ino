@@ -28,8 +28,8 @@ void setup() {
 
 }
 void loop() {
-  int val = analogRead(senRead); //variable to store values from the photodiode  
-  Serial.println(val); // prints the values from the sensor in serial monitor  
+  int visibility = analogRead(senRead); //variable to store values from the photodiode
+  Serial.println(visibility); // prints the values from the sensor in serial monitor
   //Haseeb's Code
   digitalWrite(TX_PIN, LOW);
   delayMicroseconds(2);
