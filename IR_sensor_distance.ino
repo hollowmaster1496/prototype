@@ -44,20 +44,38 @@ void loop() {
   Serial.print("Distance:");
   Serial.println(distance);
 
-  if (distance <= limit) //If obstacle is nearer than the Threshold range  
+  if (distance <= limit) //If obstacle is nearer than the Threshold range
   {
     Serial.println("Object detected");
     //beep(val);
-    delay(1000);
-  } else if (distance > limit) //If obstacle is not in Threshold range  
-  {
 
+	/* Pseudo code*/
+	// Case1: Check if IR values are within suitable range to make decision
+	if(avg_visibility - 50 < visibility < avg_visibility + 50) {
+		// use visibility value in feedback decision
+		// a) compare visibility to ultrasound distance
+		//		and find a correlation in values
+		// b) Decide whether one or the other is erroneous
+		//		and neglect using that param to control sound
+		//
+		//  eg) beep(distance*(visibility/avg_visibility));
+	}
+
+	// Case2: Use ultrasound distance only
+	//      eg) beep(distance);
+
+	// remove delays
+    delay(10);
+  }
+  else if (distance > limit) //If obstacle is not in Threshold range
+  {
     Serial.println("No objects in sight");
-    delay(1000);
+    delay(10);
   }
 
 }
 
+// Make the volume of sound proportional to distance (not light intensity)
 void beep(int sensorValue) {
   int pitch = map(sensorValue, sensorLow, sensorHigh, 50, 4000);
   tone(buzz, pitch, 1000);
